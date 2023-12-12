@@ -40,12 +40,12 @@ public class Process implements Comparable<Process> {
 		System.out.println("Arrival Time: " + arrival_time);
 	    System.out.println("Priority: " + priority);
 	    System.out.println("Burst Time: " + burst_time);
-//	    System.out.println("Memory Size: " + mbyte + " MB");
-//	    System.out.println("Writer Count: " + writer_count);
-//	    System.out.println("Scanner Count: " + scanner_count);
-//	    System.out.println("Modem Count: " + modem_count);
-//	    System.out.println("CD Count: " + cd_count);
-//	    System.out.println("------------------------------------");
+	    System.out.println("Memory Size: " + mbyte + " MB");
+	    System.out.println("Writer Count: " + writer_count);
+	    System.out.println("Scanner Count: " + scanner_count);
+	    System.out.println("Modem Count: " + modem_count);
+	    System.out.println("CD Count: " + cd_count);
+	    System.out.println("------------------------------------");
 	}
 	
 	@Override
