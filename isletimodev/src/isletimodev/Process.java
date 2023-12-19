@@ -1,6 +1,7 @@
 package isletimodev;
 
 public class Process implements Comparable<Process> {
+	int id;
 	int arrival_time;
 	int priority;
 	int burst_time;
@@ -34,6 +35,7 @@ public class Process implements Comparable<Process> {
 		this.scanner_count= array[5];
 		this.modem_count= array[6];
 		this.cd_count= array[7];
+		this.id = array[8];
 	}
 	
 	public void PrintProcess() {
