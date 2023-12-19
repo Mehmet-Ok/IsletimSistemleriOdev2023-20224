@@ -4,41 +4,30 @@ import java.util.*;
 
 public class FirstComeFirstServe {
 
-	int size;
-	int[] arrivalTimes;
-	int[] burstTimes;
-	int[] completionTimes;
-	int[] turnAroundTimes;
-	int[] waitingTimes;
-	float averageWaitingTime;
-	float averageTurnArpoundTime;
+	public static Queue<Process> fcfsQueue;
 	
-	public FirstComeFirstServe(LinkedList<Process> p) 
+	public FirstComeFirstServe() 
 	{
-		
-		p.sort(null);
-		this.size = p.size();
-		Process[] temp = p.toArray(new Process[p.size()]);
-		
-		this.arrivalTimes = new int[size];
-		this.burstTimes = new int[size];
-		this.completionTimes = new int[size];
-		this.turnAroundTimes = new int[size];
-		this.waitingTimes = new int[size];
-		this.averageTurnArpoundTime = 0;
-		this.averageWaitingTime = 0;
-		
-		int i = 0;
-		for (Process itr : temp) 
-		{
-			arrivalTimes[i] = itr.arrival_time;
-			burstTimes[i] = itr.burst_time;
-		}
+		this.fcfsQueue = new LinkedList<>();
 	}
 	
+	public void add(Process p) {
+		this.fcfsQueue.add(p);
+	}
+	
+	public boolean isEmpty() {
+		return this.fcfsQueue.isEmpty();
+	}
 
-	public static void RunFCFS() {
+	public void run() {
+		//fcfs algoritması
 		
+		Process curP = fcfsQueue.poll();
+		
+		curP.burst_time--;
+		System.out.println("realTime calıştı, pid="+curP.id+" , kalan zaman="+curP.burst_time);
+		if(curP.burst_time > 0)
+			fcfsQueue.add(curP);
 	}
 
 	

@@ -18,11 +18,14 @@ public class Main {
 	 * @throws FileNotFoundException
 	 * @throws InterruptedException
 	 */
+	@SuppressWarnings({ "static-access", "static-access" })
 	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
 		
 		LinkedList<Process> JobDispatchList = new LinkedList<>();
-		Queue<Process> RealTimeQueue = new LinkedList<>();
-		Queue<Process> UserJobQueue = new LinkedList<>();
+
+		
+		GeriBeslemeliGörevlendirici userQueue = new GeriBeslemeliGörevlendirici();
+		FirstComeFirstServe realTimeQueue = new FirstComeFirstServe();
 		
 		File fl = new File("docs/giris.txt");
 		Scanner reader = new Scanner(fl);
@@ -32,10 +35,11 @@ public class Main {
 		}
 		reader.close();
 		
+		
+		
 		Process[] deneme = JobDispatchList.toArray(new Process[JobDispatchList.size()]);
 
-		
-		
+	
 		int SYSTEM_TIME = 0;
 		boolean realTimeProcess = false;
 		boolean userProcess = false;
@@ -65,58 +69,33 @@ public class Main {
 				
 				if(realTimeProcess)
 				{
-					RealTimeQueue.add(deneme[i]);
+					realTimeQueue.add(deneme[i]);
 					//user thread dursun real time baslasın
 				}
 				if(userProcess)
 				{
 					System.out.println("user job eklendi");
-					UserJobQueue.add(deneme[i]);
+					userQueue.add(deneme[i]);
 					//realtime ı beklesin realtime bitince devam etsin
-				}
-				
-				
+				}							
 				userProcess = false;
 				realTimeProcess = false;
 			}
 			
 			//çalışma
-			if(!RealTimeQueue.isEmpty())
+			if(!realTimeQueue.isEmpty())
 			{
-				System.out.println("realTimeProcess burst time before: "+RealTimeQueue.peek().burst_time);
-				RealTimeQueue.peek().burst_time--;
-				System.out.println("realTimeProcess burst time after: "+RealTimeQueue.peek().burst_time);
-				if(RealTimeQueue.peek().burst_time == 0) {
-					System.out.println("realtime queue bitti");
-					RealTimeQueue.remove(RealTimeQueue.peek());
-				}
+				realTimeQueue.run();				
 			}
 			else {
-				System.out.println("user queue çalışıyor");
-				System.out.println("userjobs, sytemtime: "+SYSTEM_TIME);
+				userQueue.run();
 			}
 			
 			
 			SYSTEM_TIME++;
-//			if(SYSTEM_TIME<JobDispatchList.size())
-//			{
-//				SYSTEM_TIME++;
-//			}
-//			else
-//			{
-//				break;
-//			}
 			
 		}
-		
-//		for(Process p: RealTimeQueue ) {
-//			p.PrintProcess();
-//		}
-//		System.out.println("-------------------");
-//		for(Process p: UserJobQueue) {
-//			p.PrintProcess();
-//		}
-		
+
 	}
 
 }
