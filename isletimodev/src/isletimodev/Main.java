@@ -29,16 +29,21 @@ public class Main {
 		
 		File fl = new File("docs/giris.txt");
 		Scanner reader = new Scanner(fl);
+		int idIndex = 0;
 		while(reader.hasNextLine()) {
 			String data = reader.nextLine();
-			JobDispatchList.add(new Process(data));
+			JobDispatchList.add(new Process(data,idIndex));
+			idIndex++;
 		}
 		reader.close();
 		
 		
 		
 		Process[] deneme = JobDispatchList.toArray(new Process[JobDispatchList.size()]);
-
+		
+//		
+//		for(Process p: deneme)
+//			System.out.println("pid="+p.id+", status="+p.process_status);
 	
 		int SYSTEM_TIME = 0;
 		boolean realTimeProcess = false;
@@ -50,6 +55,11 @@ public class Main {
 			System.out.println("saniye: " + SYSTEM_TIME);
 			System.out.println();
 			
+			System.out.println("------------------------------------------");
+			for(Process p: deneme)
+				System.out.println("pid="+p.id+", status="+p.process_status);
+			System.out.println("------------------------------------------");
+			
 			//dağıtıcı
 			for(int i = 0; i<JobDispatchList.size(); i++)
 			{
@@ -58,7 +68,7 @@ public class Main {
 				{					
 					if(deneme[i].priority == 0)
 					{
-						System.out.println("deneme"+i+": "+deneme[i].priority);
+						
 						realTimeProcess = true;
 					}
 					else 
@@ -74,7 +84,7 @@ public class Main {
 				}
 				if(userProcess)
 				{
-					System.out.println("user job eklendi");
+					//System.out.println("user job eklendi");
 					userQueue.add(deneme[i]);
 					//realtime ı beklesin realtime bitince devam etsin
 				}							
@@ -91,7 +101,8 @@ public class Main {
 				userQueue.run();
 			}
 			
-			
+//			realTimeQueue.printProcess();
+//			userQueue.printProcess();
 			SYSTEM_TIME++;
 			
 		}

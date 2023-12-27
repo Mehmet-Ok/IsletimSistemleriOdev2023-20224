@@ -2,6 +2,8 @@ package isletimodev;
 
 public class Process implements Comparable<Process> {
 	int id;
+	int process_time;
+	Status process_status;
 	int arrival_time;
 	int priority;
 	int burst_time;
@@ -11,8 +13,19 @@ public class Process implements Comparable<Process> {
 	int modem_count;
 	int cd_count;
 	
-	public Process(int arrival_time, int priority, int burst_time, int mbyte, int writer_count, int scanner_count, int modem_count, int cd_count)
+	enum Status{
+		newP,
+		ready,
+		running,
+		waiting,
+		terminated
+	}
+	
+	public Process(int id,int arrival_time, int priority, int burst_time, int mbyte, int writer_count, int scanner_count, int modem_count, int cd_count)
 	{
+		this.id = id;
+		this.process_time = 0;
+		this.process_status = Status.newP;
 		this.arrival_time = arrival_time;
 		this.priority = priority;
 		this.burst_time=burst_time;
@@ -23,9 +36,13 @@ public class Process implements Comparable<Process> {
 		this.cd_count=cd_count;
 	}
 		
-	public Process(String str)
+	public Process(String str,int id)
 	{
 		int []array = splitStringToIntArray(str);
+		
+		this.process_time = 0;
+		this.process_status = Status.newP;
+		this.id = id;
 		
 		this.arrival_time = array[0];
 		this.priority =  array[1];
@@ -35,7 +52,6 @@ public class Process implements Comparable<Process> {
 		this.scanner_count= array[5];
 		this.modem_count= array[6];
 		this.cd_count= array[7];
-		this.id = array[8];
 	}
 	
 	public void PrintProcess() {
