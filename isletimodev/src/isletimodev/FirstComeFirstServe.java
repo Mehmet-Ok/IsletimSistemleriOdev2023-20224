@@ -8,36 +8,18 @@ public class FirstComeFirstServe {
 
 	public static Queue<Process> fcfsQueue;
 	public boolean isActive;
+	private Memory RAM;
 	
-	public FirstComeFirstServe() 
+	public FirstComeFirstServe(Memory m) 
 	{
 		this.fcfsQueue = new LinkedList<>();
 		this.isActive = false;
+		RAM = m;
 	}
-	
-//	public void beklet() {
-//		
-//		this.isActive = false;
-//		
-//		for(Process p: fcfsQueue) {
-//			p.process_status = Status.waiting;
-//		}
-//		
-//		
-//		
-//	}
-//	
-//	public void devamEt() {
-//		
-//		this.isActive = true;
-//		
-//		for(Process p: fcfsQueue) {
-//			p.process_status = Status.running;
-//		}
-//	}
-	
+		
 	public void add(Process p) {
 		p.process_status = Status.ready;
+		System.out.println("pid="+p.id+"priority="+p.priority+", p_mb="+p.mbyte+" eklendi.");
 		this.fcfsQueue.add(p);
 	}
 	
@@ -55,17 +37,23 @@ public class FirstComeFirstServe {
 	
 	public void run() {
 		//fcfs algoritması
-		
 
-		
-			System.out.println("real job");
+			if(!fcfsQueue.peek().isAllocate) {
+				RAM.allocateRealProcess(fcfsQueue.peek());
+				fcfsQueue.peek().isAllocate = true;
+//				System.out.println("realFrame allocated");
+			}
+			
 			fcfsQueue.peek().burst_time--;
 			fcfsQueue.peek().process_status = Status.running;
-			System.out.println("realTime calıştı, pid="+fcfsQueue.peek().id+", status="+fcfsQueue.peek().process_status);
-			if(fcfsQueue.peek().burst_time <= 0) {
-				//System.out.println("biten process id="+fcfsQueue.peek().id+", biten yer=p0");
+	
+			if(fcfsQueue.peek().burst_time <= 0) 
+			{
 				fcfsQueue.peek().process_status = Status.terminated;
 				fcfsQueue.poll();
+				//rami burda bırak
+				RAM.releaseRealFrame(fcfsQueue.peek());
+//				System.out.println("realFrame released");
 			}
 		
 	}

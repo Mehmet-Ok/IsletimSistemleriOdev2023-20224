@@ -4,6 +4,8 @@ public class Process implements Comparable<Process> {
 	int id;
 	int process_time;
 	Status process_status;
+	boolean isAllocate;
+	
 	int arrival_time;
 	int priority;
 	int burst_time;
@@ -12,6 +14,7 @@ public class Process implements Comparable<Process> {
 	int scanner_count;
 	int modem_count;
 	int cd_count;
+	int pageCount;
 	
 	enum Status{
 		newP,
@@ -26,6 +29,9 @@ public class Process implements Comparable<Process> {
 		this.id = id;
 		this.process_time = 0;
 		this.process_status = Status.newP;
+		this.isAllocate = false;
+		
+		
 		this.arrival_time = arrival_time;
 		this.priority = priority;
 		this.burst_time=burst_time;
@@ -34,6 +40,12 @@ public class Process implements Comparable<Process> {
 		this.scanner_count=scanner_count;
 		this.modem_count=modem_count;
 		this.cd_count=cd_count;
+		
+		if(priority == 0)
+			this.pageCount = 1;
+		else
+			this.pageCount = (mbyte%16)+1;
+		
 	}
 		
 	public Process(String str,int id)
@@ -43,6 +55,11 @@ public class Process implements Comparable<Process> {
 		this.process_time = 0;
 		this.process_status = Status.newP;
 		this.id = id;
+		this.isAllocate = false;
+		if(priority == 0)
+			this.pageCount = 1;
+		else
+			this.pageCount = (mbyte%16)+1;
 		
 		this.arrival_time = array[0];
 		this.priority =  array[1];
@@ -79,4 +96,16 @@ public class Process implements Comparable<Process> {
         }
         return intArray;
     }
+	
+	public String toString() {
+        return String.format("%d   %d   %d   %d   %d   %d   %d   %d   %d   %s",
+                id, arrival_time, priority, burst_time, mbyte, writer_count, scanner_count, modem_count, cd_count, process_status.toString());
+    }
 }
+
+
+
+
+
+
+
