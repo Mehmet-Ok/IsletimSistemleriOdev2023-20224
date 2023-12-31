@@ -1,8 +1,8 @@
-package isletimodev;
+package grup47;
 
 import java.util.*;
 
-import isletimodev.Process.Status;
+import grup47.Process.Status;
 
 public class FirstComeFirstServe {
 

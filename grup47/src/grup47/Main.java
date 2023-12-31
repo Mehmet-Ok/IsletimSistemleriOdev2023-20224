@@ -1,4 +1,4 @@
-package isletimodev;
+package grup47;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,8 +6,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-import isletimodev.Process.Reason;
-import isletimodev.Process.Status;
+import grup47.Process.Reason;
+import grup47.Process.Status;
 
 public class Main {
 
